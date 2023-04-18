@@ -30,6 +30,12 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(GoodNotFoundException.class)
+    public final ResponseEntity<ErrorDetails> handleGoodNotFoundException(Exception ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDate.now(),
+                ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
     @ExceptionHandler(BedTypeOfRegister.class)
     public final ResponseEntity<ErrorDetails> handleBadRequest(Exception ex, WebRequest request) {
         String message = ex.getMessage();
