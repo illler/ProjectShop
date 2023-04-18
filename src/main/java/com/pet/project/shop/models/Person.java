@@ -8,12 +8,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Component
 @Table(name = "person")
 public class Person {
 
@@ -21,18 +23,19 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
+    @NotEmpty(message = "поле не должно быть пустым")
     private String firstname;
 
-    @NotEmpty
+    @NotEmpty(message = "поле не должно быть пустым")
     private String lastname;
 
     @Email(message = "Это не похоже на почту")
-    @NotEmpty(message = "Электронная почта не должна быть пустой")
     private String email;
 
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).{8,}$", message = "Пока не придумал что то внятное")
     private String password;
+
+    private String purchaseHistory;
 
     @Enumerated(EnumType.STRING)
     private Role role;

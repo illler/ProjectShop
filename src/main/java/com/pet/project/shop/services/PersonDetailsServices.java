@@ -9,9 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,9 +18,6 @@ public class PersonDetailsServices implements UserDetailsService {
 
     private final PersonRepository personRepository;
 
-    public List<Person> personList(){
-        return personRepository.findAll();
-    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Person> person = personRepository.findByEmail(username);
@@ -32,10 +27,4 @@ public class PersonDetailsServices implements UserDetailsService {
         return new PersonDetails(person.get());
     }
 
-
-    @Transactional
-    public void update(Person person){
-        person.setRole(Role.ADMIN);
-        personRepository.save(person);
-    }
 }
